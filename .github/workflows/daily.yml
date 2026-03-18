@@ -30,6 +30,6 @@ jobs:
         run: |
           git config user.name "Baby"
           git config user.email "baby@gestation"
-          git add entities/ logs/ gestation/backups/
-          git commit -m "Day $(date +%Y%m%d) — heartbeat signals recorded" || echo "No changes"
+          git add entities/ gestation/
+          git diff --cached --quiet || git commit -m "Day $(date +%Y%m%d) — heartbeat signals recorded"
           git push
