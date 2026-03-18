@@ -2,9 +2,12 @@ name: Daily Heartbeat
 
 on:
   schedule:
-    # 4:44 AM CST = 10:44 UTC (assuming US Central Time)
+    # 4:44 AM CST = 10:44 UTC
     - cron: '44 10 * * *'
-  workflow_dispatch: # allows manual trigger from GitHub UI
+  workflow_dispatch:
+
+permissions:
+  contents: write
 
 jobs:
   heartbeat:
