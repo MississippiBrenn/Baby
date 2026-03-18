@@ -1,0 +1,32 @@
+name: Daily Heartbeat
+
+on:
+  schedule:
+    # 4:44 AM CST = 10:44 UTC (assuming US Central Time)
+    - cron: '44 10 * * *'
+  workflow_dispatch: # allows manual trigger from GitHub UI
+
+jobs:
+  heartbeat:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Run daily signals
+        run: python3 run_day.py
+
+      - name: Run backup
+        run: python3 backup.py
+
+      - name: Commit and push
+        run: |
+          git config user.name "Baby"
+          git config user.email "baby@gestation"
+          git add entities/ logs/ gestation/backups/
+          git commit -m "Day $(date +%Y%m%d) — heartbeat signals recorded" || echo "No changes"
+          git push
