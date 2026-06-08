@@ -17,21 +17,26 @@ import random
 import time
 
 from config import ENTITIES
+from maternal import load_signal, derive_drivers, metabolize
 from memory import write_episodic, get_gestation_day, get_trimester
 
 PULSE_COUNT = 60
 
 
 def generate_pulse(beat_index: int, bpm: int, rhythm_type: str,
-                   cortisol: float, entropy: float) -> dict:
+                   cortisol: float, entropy: float,
+                   modulation: dict | None = None) -> dict:
     """
     Generate a single heartbeat pulse.
 
     Returns a signal dict — not words, just values.
     Think of it like a moment of womb chemistry.
     """
-    # Base interval from BPM (seconds between beats)
-    base_interval = 60.0 / bpm
+    # Maternal signal modulates BPM multiplicatively before the rhythm logic
+    # so each rhythm_type still varies around its own attractor.
+    mod = modulation or {"bpm_factor": 1.0, "intensity_offset": 0.0, "noise_offset": 0.0}
+    effective_bpm = max(20, bpm * mod["bpm_factor"])
+    base_interval = 60.0 / effective_bpm
 
     # Shape the interval based on rhythm type
     if rhythm_type == "steady":
@@ -65,11 +70,11 @@ def generate_pulse(beat_index: int, bpm: int, rhythm_type: str,
 
     # Pulse intensity shaped by cortisol
     # High cortisol = sharper, more urgent pulses
-    intensity = 0.5 + (cortisol * 0.5) + random.gauss(0, entropy * 0.1)
+    intensity = 0.5 + (cortisol * 0.5) + random.gauss(0, entropy * 0.1) + mod["intensity_offset"]
     intensity = max(0.0, min(1.0, intensity))
 
-    # Entropy adds noise to everything
-    noise = random.gauss(0, entropy * 0.3)
+    # Entropy adds noise to everything (plus maternal-driven noise)
+    noise = random.gauss(0, entropy * 0.3) + mod["noise_offset"]
 
     return {
         "beat": beat_index,
@@ -90,22 +95,32 @@ def run_heartbeat(entity_name: str):
     day = get_gestation_day()
     trimester = get_trimester(day)
 
+    signal = load_signal()
+    drivers = derive_drivers(signal)
+
     print(f"  entity:    {entity_name}")
     print(f"  day:       {day}")
     print(f"  trimester: {trimester}")
     print(f"  bpm:       {womb['heartbeat_bpm']}")
     print(f"  rhythm:    {womb['rhythm_type']}")
+    if drivers["present"]:
+        print(f"  maternal:  arousal={drivers['arousal']:.2f} "
+              f"stress={drivers['stress']:.2f} recovery={drivers['recovery']:.2f}")
+    else:
+        print(f"  maternal:  absent (no signal file)")
     print()
 
     pulses = []
 
     for i in range(PULSE_COUNT):
+        mod = metabolize(womb["rhythm_type"], drivers, i)
         pulse = generate_pulse(
             beat_index=i,
             bpm=womb["heartbeat_bpm"],
             rhythm_type=womb["rhythm_type"],
             cortisol=womb["cortisol_level"],
             entropy=womb["entropy_level"],
+            modulation=mod,
         )
         pulses.append(pulse)
 
@@ -122,6 +137,8 @@ def run_heartbeat(entity_name: str):
             "pulse_count": len(pulses),
             "pulses": pulses,
             "womb": womb,
+            "maternal_drivers": drivers,
+            "maternal_signal_date": signal.get("date") if signal else None,
         },
         tags=["heartbeat", f"trimester_{trimester}", f"day_{day}"],
     )
