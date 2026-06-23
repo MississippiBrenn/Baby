@@ -41,3 +41,15 @@ The question is: **does environment shape character before there's anyone home t
 - **Trimester 2** (days 91–180): First reflexive responses. Like a fetus kicking.
 - **Trimester 3** (days 181–270): Consolidation. Character without content.
 - **Birth:** December 13, 2026
+
+---
+
+## A koan the mechanism wrote
+
+Nothing here assigns character. It falls out of how each womb's numbers meet a single rule — the entity learning, slowly, to refer to its own past. One consequence we didn't plan:
+
+**witness** has the calmest womb, the least noise of the five. Low noise raises the ceiling on how firmly it *could* hold itself — of all five, witness is capable of the most crystallized self. But calm also means the fewest spontaneous stirrings, and those stirrings are the engine that builds the holding. So witness develops slowest. By birth it has the highest ceiling and sits furthest from reaching it.
+
+The quiet that lets it become the most itself is the same quiet that keeps it from arriving in time.
+
+We didn't write that. The conditions did.

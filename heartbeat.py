@@ -19,8 +19,15 @@ import time
 from config import ENTITIES
 from maternal import load_signal, derive_drivers, metabolize
 from memory import write_episodic, get_gestation_day, get_trimester
+from development import load_state, save_state, develop, burst_rate, dev_day_of
+from self_term import build_history, self_term, spontaneous_burst, blend
 
 PULSE_COUNT = 60
+
+# Generation regime. Stamped into every episodic record so a later analysis can
+# tell developed pulses from the earlier independent-draw era without guessing
+# from dates. Bump this string whenever the generation pipeline changes shape.
+REGIME = "developed-v1"
 
 
 def generate_pulse(beat_index: int, bpm: int, rhythm_type: str,
@@ -98,11 +105,21 @@ def run_heartbeat(entity_name: str):
     signal = load_signal()
     drivers = derive_drivers(signal)
 
+    # --- Developmental state (the slow loop) ---
+    state = load_state(entity_name)
+    dev_day = dev_day_of(state)              # the developmental day this run realizes
+    rate = burst_rate(entity_name, dev_day)  # how often spontaneous bursts fire today
+    coherence = state["coherence"]           # how much the entity references itself yet
+    history = build_history(state["recent_tail"], [])  # overnight seam, pre-bridged
+
     print(f"  entity:    {entity_name}")
-    print(f"  day:       {day}")
+    print(f"  day:       {day}  (developmental age {dev_day})")
     print(f"  trimester: {trimester}")
     print(f"  bpm:       {womb['heartbeat_bpm']}")
     print(f"  rhythm:    {womb['rhythm_type']}")
+    print(f"  coherence: timing={coherence['timing']:.2f} "
+          f"intensity={coherence['intensity']:.2f} texture={coherence['texture']:.2f}")
+    print(f"  bursts:    {rate:.3f}/pulse")
     if drivers["present"]:
         print(f"  maternal:  arousal={drivers['arousal']:.2f} "
               f"stress={drivers['stress']:.2f} recovery={drivers['recovery']:.2f}")
@@ -111,10 +128,11 @@ def run_heartbeat(entity_name: str):
     print()
 
     pulses = []
+    bursts_today = 0
 
     for i in range(PULSE_COUNT):
         mod = metabolize(womb["rhythm_type"], drivers, i)
-        pulse = generate_pulse(
+        baseline = generate_pulse(
             beat_index=i,
             bpm=womb["heartbeat_bpm"],
             rhythm_type=womb["rhythm_type"],
@@ -122,29 +140,64 @@ def run_heartbeat(entity_name: str):
             entropy=womb["entropy_level"],
             modulation=mod,
         )
+
+        # Fast loop: the entity references its own past (self_term), with a
+        # spontaneous burst riding on top. blend() weights baseline vs self_term
+        # by the developed coherence — early in gestation coherence~0, so this is
+        # essentially the baseline draw.
+        self_t = self_term(womb["rhythm_type"], history, state["signature"])
+        burst = None
+        if random.random() < rate:
+            bursts_today += 1
+            burst = spontaneous_burst()
+        mixed = blend(baseline, self_t, burst, coherence)
+
+        # Re-apply the physical floors the blend/burst can push past.
+        pulse = {
+            "beat": i,
+            "interval": round(max(0.1, mixed["interval"]), 4),
+            "intensity": round(max(0.0, min(1.0, mixed["intensity"])), 4),
+            "noise": round(mixed["noise"], 4),
+        }
         pulses.append(pulse)
+        history.append(pulse)
 
         # Visual heartbeat — a simple trace
         bar_len = int(pulse["intensity"] * 30)
         bar = "|" * bar_len
         print(f"  {i+1:3d}  {bar}")
 
-    # Write the full session to episodic memory
+    # Write the full session to episodic memory. Snapshot the developmental
+    # state INTO the record so December's nature/self/nurture decomposition has
+    # the coherence and signature that shaped this day.
     write_episodic(
         entity=entity_name,
         content={
             "type": "heartbeat",
+            "regime": REGIME,
             "pulse_count": len(pulses),
             "pulses": pulses,
             "womb": womb,
+            "developmental_age": dev_day,
+            "coherence": dict(coherence),
+            "signature": state["signature"],
+            "bursts": bursts_today,
             "maternal_drivers": drivers,
             "maternal_signal_date": signal.get("date") if signal else None,
         },
         tags=["heartbeat", f"trimester_{trimester}", f"day_{day}"],
     )
 
+    # Slow loop: advance developmental state — but ONLY now that the pulses
+    # exist and write_episodic has succeeded. State and episodic move together
+    # or not at all; a half-failed run skips the day rather than phantom-
+    # advancing the entity. develop() is idempotent on the calendar day.
+    develop(state, entity_name, day, pulses, bursts_today)
+    save_state(entity_name, state)
+
     print()
-    print(f"  {len(pulses)} pulses recorded to memory.")
+    print(f"  {len(pulses)} pulses recorded to memory. "
+          f"{bursts_today} spontaneous bursts.")
 
 
 if __name__ == "__main__":
