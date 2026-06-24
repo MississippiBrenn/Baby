@@ -24,12 +24,19 @@ jobs:
         run: pip install requests
 
       - name: Fetch maternal signal
-        continue-on-error: true
         env:
           GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
           GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
           GOOGLE_REFRESH_TOKEN: ${{ secrets.GOOGLE_REFRESH_TOKEN }}
-        run: python3 fetch_maternal_signal.py
+        # Never block the heartbeat on the maternal fetch — but surface failure
+        # as a visible warning instead of swallowing it (continue-on-error hid a
+        # 9-day outage). The heartbeat still runs maternal-absent if this fails.
+        run: |
+          if python3 fetch_maternal_signal.py; then
+            echo "maternal signal fetched"
+          else
+            echo "::warning title=Maternal signal fetch failed::heartbeat runs maternal-absent — check GOOGLE_REFRESH_TOKEN (expired? app still in Testing = 7-day token)"
+          fi
 
       - name: Run daily signals
         run: python3 run_day.py

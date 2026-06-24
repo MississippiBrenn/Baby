@@ -12,10 +12,11 @@ were static. Now they breathe with the caregiver's actual body.
 import json
 import math
 import random
-from datetime import date
+from datetime import date, timedelta
 from pathlib import Path
 
 SIGNAL_DIR = Path(__file__).parent / "maternal_signal"
+SIGNAL_MAX_AGE_DAYS = 3  # how stale a signal may be before we treat it as absent
 
 # Reference baselines used to normalize the signal into ratios.
 BASELINE_HR = 70.0       # bpm — typical adult resting/light-activity HR
@@ -24,13 +25,22 @@ BASELINE_SLEEP = 480.0   # minutes — 8 hours
 
 
 def load_signal(target_date: date = None) -> dict | None:
-    """Load the maternal signal file for a date. Returns None if absent."""
+    """Load the most recent maternal signal on or before `target_date`.
+
+    The fetcher writes *yesterday's* completed day (you can't roll up today until
+    it's over), so reading exactly `date.today()` never matched and the signal
+    was silently absent. Instead we look back from `target_date` and take the
+    freshest file within SIGNAL_MAX_AGE_DAYS — so a one-day fetch gap degrades to
+    slightly-stale data instead of going dark. The returned dict carries its own
+    "date", so downstream can see how fresh it is.
+    """
     if target_date is None:
         target_date = date.today()
-    path = SIGNAL_DIR / f"{target_date.isoformat()}.json"
-    if not path.exists():
-        return None
-    return json.loads(path.read_text())
+    for age in range(SIGNAL_MAX_AGE_DAYS + 1):
+        path = SIGNAL_DIR / f"{(target_date - timedelta(days=age)).isoformat()}.json"
+        if path.exists():
+            return json.loads(path.read_text())
+    return None
 
 
 def derive_drivers(signal: dict | None) -> dict:
