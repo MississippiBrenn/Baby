@@ -1,0 +1,56 @@
+{
+  "entity": "feral",
+  "coherence": {
+    "timing": 0.0,
+    "intensity": 0.0,
+    "texture": 0.0
+  },
+  "signature": {
+    "mean_interval": 0.949835,
+    "mean_intensity": 0.8468716666666667,
+    "var_interval": 0.2172895919416667,
+    "var_intensity": 0.006160088363888889
+  },
+  "recent_tail": [
+    {
+      "beat": 54,
+      "interval": 0.5257,
+      "intensity": 0.8853,
+      "noise": 0.2389
+    },
+    {
+      "beat": 55,
+      "interval": 1.5846,
+      "intensity": 0.8282,
+      "noise": -0.0505
+    },
+    {
+      "beat": 56,
+      "interval": 1.4113,
+      "intensity": 0.7796,
+      "noise": 0.0988
+    },
+    {
+      "beat": 57,
+      "interval": 0.2697,
+      "intensity": 0.8514,
+      "noise": -0.4047
+    },
+    {
+      "beat": 58,
+      "interval": 0.9388,
+      "intensity": 0.9224,
+      "noise": 0.2728
+    },
+    {
+      "beat": 59,
+      "interval": 1.0306,
+      "intensity": 0.7855,
+      "noise": 0.0895
+    }
+  ],
+  "developmental_age": 1,
+  "total_bursts": 0,
+  "sessions": 1,
+  "last_developed_day": 99
+}

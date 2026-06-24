@@ -1,0 +1,56 @@
+{
+  "entity": "dreamer",
+  "coherence": {
+    "timing": 0.0,
+    "intensity": 0.0,
+    "texture": 0.0
+  },
+  "signature": {
+    "mean_interval": 1.01031,
+    "mean_intensity": 0.6525433333333334,
+    "var_interval": 0.03464201623333333,
+    "var_intensity": 0.002917746122222223
+  },
+  "recent_tail": [
+    {
+      "beat": 54,
+      "interval": 0.5694,
+      "intensity": 0.7666,
+      "noise": 0.0463
+    },
+    {
+      "beat": 55,
+      "interval": 1.1145,
+      "intensity": 0.6776,
+      "noise": -0.0256
+    },
+    {
+      "beat": 56,
+      "interval": 1.151,
+      "intensity": 0.6356,
+      "noise": -0.071
+    },
+    {
+      "beat": 57,
+      "interval": 1.1192,
+      "intensity": 0.7241,
+      "noise": -0.1176
+    },
+    {
+      "beat": 58,
+      "interval": 1.0457,
+      "intensity": 0.6488,
+      "noise": 0.0447
+    },
+    {
+      "beat": 59,
+      "interval": 1.1049,
+      "intensity": 0.7185,
+      "noise": 0.1654
+    }
+  ],
+  "developmental_age": 1,
+  "total_bursts": 0,
+  "sessions": 1,
+  "last_developed_day": 99
+}
