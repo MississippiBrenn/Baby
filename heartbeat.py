@@ -15,9 +15,10 @@ import argparse
 import math
 import random
 import time
+from datetime import date
 
 from config import ENTITIES
-from maternal import load_signal, derive_drivers, metabolize
+from maternal import load_signal, derive_drivers, metabolize, SIGNAL_MAX_AGE_DAYS
 from memory import write_episodic, get_gestation_day, get_trimester
 from development import load_state, save_state, develop, burst_rate, dev_day_of
 from self_term import build_history, self_term, spontaneous_burst, blend
@@ -121,10 +122,15 @@ def run_heartbeat(entity_name: str):
           f"intensity={coherence['intensity']:.2f} texture={coherence['texture']:.2f}")
     print(f"  bursts:    {rate:.3f}/pulse")
     if drivers["present"]:
+        sig_date = signal.get("date") if signal else None
+        freshness = ""
+        if sig_date:
+            gap = (date.today() - date.fromisoformat(sig_date)).days
+            freshness = f"  signal {sig_date} ({'fresh' if gap <= 1 else f'{gap}d stale'})"
         print(f"  maternal:  arousal={drivers['arousal']:.2f} "
-              f"stress={drivers['stress']:.2f} recovery={drivers['recovery']:.2f}")
+              f"stress={drivers['stress']:.2f} recovery={drivers['recovery']:.2f}{freshness}")
     else:
-        print(f"  maternal:  absent (no signal file)")
+        print(f"  maternal:  absent (no signal within {SIGNAL_MAX_AGE_DAYS}d)")
     print()
 
     pulses = []
