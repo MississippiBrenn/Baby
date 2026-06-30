@@ -16,7 +16,8 @@ from datetime import date, timedelta
 from pathlib import Path
 
 SIGNAL_DIR = Path(__file__).parent / "maternal_signal"
-SIGNAL_MAX_AGE_DAYS = 3  # how stale a signal may be before we treat it as absent
+SIGNAL_MAX_AGE_DAYS = 3  # how stale a steps-only signal may be before "absent"
+RICH_MAX_AGE_DAYS = 7    # how far back to bridge a real heartbeat across a wearable gap
 
 # Reference baselines used to normalize the signal into ratios.
 BASELINE_HR = 70.0       # bpm — typical adult resting/light-activity HR
@@ -24,23 +25,47 @@ BASELINE_HRV = 50.0      # ms RMSSD — above this is "calm", below is "stressed
 BASELINE_SLEEP = 480.0   # minutes — 8 hours
 
 
+def _has_heartbeat(signal: dict) -> bool:
+    """True if the signal carries actual heart-rate data — the maternal
+    heartbeat — not just steps. HR/HRV/sleep come from the wrist; on days the
+    wearable isn't worn, only steps arrive and HR samples are 0."""
+    hr = (signal or {}).get("heart_rate") or {}
+    return (hr.get("samples") or 0) > 0
+
+
 def load_signal(target_date: date = None) -> dict | None:
-    """Load the most recent maternal signal on or before `target_date`.
+    """Load the freshest *rich* maternal signal on or before `target_date`.
 
     The fetcher writes *yesterday's* completed day (you can't roll up today until
     it's over), so reading exactly `date.today()` never matched and the signal
-    was silently absent. Instead we look back from `target_date` and take the
-    freshest file within SIGNAL_MAX_AGE_DAYS — so a one-day fetch gap degrades to
-    slightly-stale data instead of going dark. The returned dict carries its own
-    "date", so downstream can see how fresh it is.
+    was silently absent — that's why no record ever carried one. We look back
+    from `target_date` and:
+      1. prefer the freshest day with a real heartbeat (within RICH_MAX_AGE_DAYS),
+         so a missing day or two on the wrist doesn't drop the entities to a
+         neutral signal — they keep feeling a real (if slightly stale) heart;
+      2. else fall back to the freshest signal at all (within SIGNAL_MAX_AGE_DAYS),
+         e.g. a steps-only day;
+      3. else None.
+    The returned dict carries its own "date", so downstream can see how stale the
+    bridged signal is.
     """
     if target_date is None:
         target_date = date.today()
-    for age in range(SIGNAL_MAX_AGE_DAYS + 1):
+
+    window = max(RICH_MAX_AGE_DAYS, SIGNAL_MAX_AGE_DAYS)
+    available = []  # freshest-first: (age, signal)
+    for age in range(window + 1):
         path = SIGNAL_DIR / f"{(target_date - timedelta(days=age)).isoformat()}.json"
         if path.exists():
-            return json.loads(path.read_text())
-    return None
+            available.append((age, json.loads(path.read_text())))
+
+    for age, sig in available:                       # 1. freshest real heartbeat
+        if age <= RICH_MAX_AGE_DAYS and _has_heartbeat(sig):
+            return sig
+    for age, sig in available:                       # 2. freshest anything recent
+        if age <= SIGNAL_MAX_AGE_DAYS:
+            return sig
+    return None                                      # 3. nothing usable
 
 
 def derive_drivers(signal: dict | None) -> dict:
