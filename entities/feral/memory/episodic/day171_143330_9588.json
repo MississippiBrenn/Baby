@@ -1,0 +1,403 @@
+{
+  "timestamp": "2026-09-04T14:33:30.958887",
+  "gestation_day": 171,
+  "trimester": 2,
+  "tags": [
+    "heartbeat",
+    "trimester_2",
+    "day_171"
+  ],
+  "content": {
+    "type": "heartbeat",
+    "regime": "developed-v1",
+    "pulse_count": 60,
+    "pulses": [
+      {
+        "beat": 0,
+        "interval": 0.3142,
+        "intensity": 0.9272,
+        "noise": 0.2377
+      },
+      {
+        "beat": 1,
+        "interval": 1.7965,
+        "intensity": 1.0,
+        "noise": -0.0805
+      },
+      {
+        "beat": 2,
+        "interval": 0.8433,
+        "intensity": 1.0,
+        "noise": 0.0883
+      },
+      {
+        "beat": 3,
+        "interval": 1.1161,
+        "intensity": 0.7948,
+        "noise": -0.1618
+      },
+      {
+        "beat": 4,
+        "interval": 1.3161,
+        "intensity": 0.9465,
+        "noise": 0.2163
+      },
+      {
+        "beat": 5,
+        "interval": 1.9101,
+        "intensity": 1.0,
+        "noise": 0.2188
+      },
+      {
+        "beat": 6,
+        "interval": 3.1471,
+        "intensity": 0.9504,
+        "noise": 0.8007
+      },
+      {
+        "beat": 7,
+        "interval": 0.7164,
+        "intensity": 0.8558,
+        "noise": -0.1063
+      },
+      {
+        "beat": 8,
+        "interval": 0.7268,
+        "intensity": 0.9246,
+        "noise": 0.1158
+      },
+      {
+        "beat": 9,
+        "interval": 3.0033,
+        "intensity": 0.9994,
+        "noise": 0.1091
+      },
+      {
+        "beat": 10,
+        "interval": 1.7631,
+        "intensity": 0.8793,
+        "noise": 0.0292
+      },
+      {
+        "beat": 11,
+        "interval": 0.4008,
+        "intensity": 0.8352,
+        "noise": -0.2773
+      },
+      {
+        "beat": 12,
+        "interval": 0.395,
+        "intensity": 0.9112,
+        "noise": -0.5428
+      },
+      {
+        "beat": 13,
+        "interval": 0.4863,
+        "intensity": 0.8401,
+        "noise": 0.3313
+      },
+      {
+        "beat": 14,
+        "interval": 5.839,
+        "intensity": 0.8905,
+        "noise": 0.4534
+      },
+      {
+        "beat": 15,
+        "interval": 0.7637,
+        "intensity": 0.8092,
+        "noise": 0.0238
+      },
+      {
+        "beat": 16,
+        "interval": 1.9779,
+        "intensity": 0.8716,
+        "noise": -0.0351
+      },
+      {
+        "beat": 17,
+        "interval": 0.3648,
+        "intensity": 0.9626,
+        "noise": -0.282
+      },
+      {
+        "beat": 18,
+        "interval": 0.601,
+        "intensity": 1.0,
+        "noise": 0.7494
+      },
+      {
+        "beat": 19,
+        "interval": 0.5204,
+        "intensity": 0.9923,
+        "noise": 0.715
+      },
+      {
+        "beat": 20,
+        "interval": 1.4282,
+        "intensity": 1.0,
+        "noise": 0.3712
+      },
+      {
+        "beat": 21,
+        "interval": 2.5421,
+        "intensity": 0.9244,
+        "noise": 0.3212
+      },
+      {
+        "beat": 22,
+        "interval": 0.7501,
+        "intensity": 1.0,
+        "noise": -0.1351
+      },
+      {
+        "beat": 23,
+        "interval": 0.8646,
+        "intensity": 0.8952,
+        "noise": 0.0396
+      },
+      {
+        "beat": 24,
+        "interval": 0.8406,
+        "intensity": 0.6685,
+        "noise": -0.1265
+      },
+      {
+        "beat": 25,
+        "interval": 1.6005,
+        "intensity": 1.0,
+        "noise": 0.029
+      },
+      {
+        "beat": 26,
+        "interval": 1.8659,
+        "intensity": 1.0,
+        "noise": 0.3668
+      },
+      {
+        "beat": 27,
+        "interval": 1.1413,
+        "intensity": 1.0,
+        "noise": -0.0329
+      },
+      {
+        "beat": 28,
+        "interval": 0.5177,
+        "intensity": 0.8548,
+        "noise": -0.0932
+      },
+      {
+        "beat": 29,
+        "interval": 2.0406,
+        "intensity": 0.9893,
+        "noise": -0.2403
+      },
+      {
+        "beat": 30,
+        "interval": 0.2678,
+        "intensity": 0.8353,
+        "noise": 0.0433
+      },
+      {
+        "beat": 31,
+        "interval": 1.5708,
+        "intensity": 0.9863,
+        "noise": 0.0541
+      },
+      {
+        "beat": 32,
+        "interval": 0.2689,
+        "intensity": 1.0,
+        "noise": 0.15
+      },
+      {
+        "beat": 33,
+        "interval": 0.3097,
+        "intensity": 0.7286,
+        "noise": -0.0017
+      },
+      {
+        "beat": 34,
+        "interval": 0.7543,
+        "intensity": 0.8033,
+        "noise": -0.0762
+      },
+      {
+        "beat": 35,
+        "interval": 0.6216,
+        "intensity": 0.8149,
+        "noise": -0.0124
+      },
+      {
+        "beat": 36,
+        "interval": 1.3896,
+        "intensity": 0.7506,
+        "noise": 0.5153
+      },
+      {
+        "beat": 37,
+        "interval": 1.6623,
+        "intensity": 0.9006,
+        "noise": 0.0577
+      },
+      {
+        "beat": 38,
+        "interval": 1.0825,
+        "intensity": 0.9123,
+        "noise": 0.4067
+      },
+      {
+        "beat": 39,
+        "interval": 1.5502,
+        "intensity": 1.0,
+        "noise": 0.3419
+      },
+      {
+        "beat": 40,
+        "interval": 0.8232,
+        "intensity": 1.0,
+        "noise": 0.2197
+      },
+      {
+        "beat": 41,
+        "interval": 1.4192,
+        "intensity": 0.8522,
+        "noise": 0.2709
+      },
+      {
+        "beat": 42,
+        "interval": 0.5616,
+        "intensity": 0.8264,
+        "noise": 0.1448
+      },
+      {
+        "beat": 43,
+        "interval": 0.5512,
+        "intensity": 0.9695,
+        "noise": 0.2964
+      },
+      {
+        "beat": 44,
+        "interval": 0.5399,
+        "intensity": 0.8871,
+        "noise": -0.2047
+      },
+      {
+        "beat": 45,
+        "interval": 1.3854,
+        "intensity": 0.8915,
+        "noise": 0.1808
+      },
+      {
+        "beat": 46,
+        "interval": 0.3915,
+        "intensity": 0.886,
+        "noise": -0.2178
+      },
+      {
+        "beat": 47,
+        "interval": 0.8028,
+        "intensity": 1.0,
+        "noise": -0.3047
+      },
+      {
+        "beat": 48,
+        "interval": 0.7831,
+        "intensity": 1.0,
+        "noise": 0.1654
+      },
+      {
+        "beat": 49,
+        "interval": 0.6728,
+        "intensity": 1.0,
+        "noise": 0.6649
+      },
+      {
+        "beat": 50,
+        "interval": 1.3549,
+        "intensity": 0.793,
+        "noise": -0.4778
+      },
+      {
+        "beat": 51,
+        "interval": 0.3969,
+        "intensity": 0.8581,
+        "noise": 0.2174
+      },
+      {
+        "beat": 52,
+        "interval": 0.6058,
+        "intensity": 0.9735,
+        "noise": 0.1793
+      },
+      {
+        "beat": 53,
+        "interval": 2.7608,
+        "intensity": 0.8485,
+        "noise": 0.0909
+      },
+      {
+        "beat": 54,
+        "interval": 0.2147,
+        "intensity": 0.8929,
+        "noise": 0.3289
+      },
+      {
+        "beat": 55,
+        "interval": 0.4296,
+        "intensity": 0.9955,
+        "noise": 0.6355
+      },
+      {
+        "beat": 56,
+        "interval": 0.421,
+        "intensity": 0.8573,
+        "noise": 0.4255
+      },
+      {
+        "beat": 57,
+        "interval": 1.5558,
+        "intensity": 0.758,
+        "noise": 0.2887
+      },
+      {
+        "beat": 58,
+        "interval": 0.9476,
+        "intensity": 0.9745,
+        "noise": 0.1801
+      },
+      {
+        "beat": 59,
+        "interval": 1.1319,
+        "intensity": 0.8338,
+        "noise": 0.2151
+      }
+    ],
+    "womb": {
+      "heartbeat_bpm": 80,
+      "rhythm_type": "arrhythmic",
+      "cortisol_level": 0.7,
+      "entropy_level": 0.9
+    },
+    "developmental_age": 73,
+    "coherence": {
+      "timing": 0.062456777755654745,
+      "intensity": 0.0,
+      "texture": 0.0
+    },
+    "signature": {
+      "mean_interval": 1.1975893305061258,
+      "mean_intensity": 0.881018729954424,
+      "var_interval": 0.5876107750415371,
+      "var_intensity": 0.00723335339296364
+    },
+    "bursts": 0,
+    "maternal_drivers": {
+      "arousal": 1.0913797124594324,
+      "stress": 0.4355257731958764,
+      "recovery": 1.0333333333333334,
+      "present": true
+    },
+    "maternal_signal_date": "2026-09-03"
+  }
+}
