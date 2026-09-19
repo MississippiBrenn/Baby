@@ -6,51 +6,51 @@
     "texture": 0.0
   },
   "signature": {
-    "mean_interval": 0.9529569812669894,
-    "mean_intensity": 0.6665571859001977,
-    "var_interval": 0.02195003759353383,
-    "var_intensity": 0.0027347126665543775
+    "mean_interval": 0.9467943367974676,
+    "mean_intensity": 0.6564424232839512,
+    "var_interval": 0.024480558030236146,
+    "var_intensity": 0.002802078627169918
   },
   "recent_tail": [
     {
       "beat": 54,
-      "interval": 0.9749,
-      "intensity": 0.5932,
-      "noise": 0.1535
+      "interval": 0.883,
+      "intensity": 0.6828,
+      "noise": 0.1147
     },
     {
       "beat": 55,
-      "interval": 1.0453,
-      "intensity": 0.6645,
-      "noise": -0.2191
+      "interval": 0.5218,
+      "intensity": 0.695,
+      "noise": 0.0728
     },
     {
       "beat": 56,
-      "interval": 0.928,
-      "intensity": 0.6501,
-      "noise": 0.1936
+      "interval": 1.0442,
+      "intensity": 0.6057,
+      "noise": -0.0582
     },
     {
       "beat": 57,
-      "interval": 0.9545,
-      "intensity": 0.6581,
-      "noise": -0.2591
+      "interval": 0.7641,
+      "intensity": 0.6757,
+      "noise": 0.1222
     },
     {
       "beat": 58,
-      "interval": 1.1126,
-      "intensity": 0.613,
-      "noise": -0.1282
+      "interval": 1.0129,
+      "intensity": 0.6116,
+      "noise": 0.1247
     },
     {
       "beat": 59,
-      "interval": 1.1079,
-      "intensity": 0.6846,
-      "noise": 0.131
+      "interval": 1.1643,
+      "intensity": 0.61,
+      "noise": 0.155
     }
   ],
-  "developmental_age": 87,
+  "developmental_age": 88,
   "total_bursts": 20,
-  "sessions": 87,
-  "last_developed_day": 185
+  "sessions": 88,
+  "last_developed_day": 186
 }
