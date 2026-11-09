@@ -1,0 +1,28 @@
+{
+  "date": "2026-11-08",
+  "fetched_at": "2026-11-09T21:05:53.666720+00:00",
+  "heart_rate": {
+    "min": 53.0,
+    "max": 123.0,
+    "mean": 74.2407376640638,
+    "samples": 36114
+  },
+  "hrv": {
+    "mean_ms": 35.26126126126126,
+    "samples": 111
+  },
+  "resting_hr": 65.0,
+  "steps": 5429.0,
+  "active_minutes": 4.0,
+  "sleep": {
+    "minutes_asleep": 552,
+    "minutes_awake": 16,
+    "stages": {
+      "AWAKE": 16,
+      "LIGHT": 312,
+      "DEEP": 90,
+      "REM": 150
+    }
+  },
+  "notes": null
+}
